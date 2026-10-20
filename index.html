@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KosChef AI - Smart Meal Planner Anak Kos</title>
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --border: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    header h1 {
+      font-size: 2.2rem;
+      color: var(--primary);
+    }
+
+    header p {
+      color: #64748b;
+    }
+
+    .card {
+      background: var(--card-bg);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      margin-bottom: 25px;
+      border: 1px solid var(--border);
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+
+    button {
+      width: 100%;
+      background-color: var(--primary);
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    button:hover {
+      background-color: var(--primary-hover);
+    }
+
+    .results {
+      display: none;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f1f5f9;
+    }
+
+    .monetization-box {
+      background-color: #eff6ff;
+      border: 1px dashed var(--primary);
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .monetization-box button {
+      background-color: #16a34a;
+      margin-top: 10px;
+    }
+
+    .monetization-box button:hover {
+      background-color: #15803d;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1>KosChef AI</h1>
+      <p>Perencana Menu Makan Hemat & Sehat Khusus Anak Kos</p>
+    </header>
+
+    <div class="card">
+      <div class="form-group">
+        <label for="budget">Budget Makan Seminggu (Rp):</label>
+        <input type="number" id="budget" placeholder="Contoh: 150000" value="150000">
+      </div>
+
+      <div class="form-group">
+        <label for="allergy">Pantangan / Alergi Makanan:</label>
+        <input type="text" id="allergy" placeholder="Contoh: Tidak pedas, Tanpa seafood, Vegetarian">
+      </div>
+
+      <button onclick="generateMealPlan()">Rancang Menu Makanan Saya</button>
+    </div>
+
+    <div id="resultsCard" class="card results">
+      <h2>Rencana Menu Mingguan Anda</h2>
+      <p id="budgetText"></p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Hari</th>
+            <th>Makan Pagi</th>
+            <th>Makan Siang</th>
+            <th>Makan Malam</th>
+          </tr>
+        </thead>
+        <tbody id="mealTableBody">
+          <!-- Data menu diproses via JavaScript -->
+        </tbody>
+      </table>
+
+      <div class="monetization-box">
+        <h3>Malas Masak Sendiri?</h3>
+        <p>Pesan paket katering hemat sesuai rekomendasi AI di atas melalui mitra katering terdekat!</p>
+        <button onclick="alert('Fitur pemesanan katering kemitraan akan segera hadir!')">Pesan Katering Mitra (Diskon 10%)</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function generateMealPlan() {
+      const budget = document.getElementById('budget').value;
+      const allergy = document.getElementById('allergy').value || 'Tidak ada';
+
+      if (!budget || budget <= 0) {
+        alert('Harap masukkan budget yang valid!');
+        return;
+      }
+
+      // Menampilkan area hasil
+      document.getElementById('resultsCard').style.display = 'block';
+      document.getElementById('budgetText').innerText = `Estimasi Total Biaya: Rp ${parseInt(budget).toLocaleString('id-ID')} | Catatan: ${allergy}`;
+
+      // Simulasi Generasi AI (Dapat dihubungkan ke API AI aktual di pengembangan selanjutnya)
+      const days = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+      const sampleMeals = [
+        { morning: 'Nasi Uduk & Telur Balado', lunch: 'Nasi + Warteg (Ayam & Sayur)', dinner: 'Mie Dog-dog Telur' },
+        { morning: 'Roti Tawar & Selai Kacang', lunch: 'Nasi Goreng Telur', dinner: 'Soto Ayam Madura' },
+        { morning: 'Bubur Ayam', lunch: 'Nasi + Capcay + Tahu', dinner: 'Pecel Lele' },
+        { morning: 'Oatmeal & Pisang', lunch: 'Nasi + Tempe Orek + Sayur Bayam', dinner: 'Nasi + Telur Dadar Khas Padang' },
+        { morning: 'Nasi Uduk', lunch: 'Nasi + Ayam Penyet', dinner: 'Tumis Kangkung & Tahu Goreng' },
+        { morning: 'Roti Bakar Telur', lunch: 'Nasi + Sayur Asem + Ikan Asin', dinner: 'Nasi Goreng Mawut' },
+        { morning: 'Lontong Sayur', lunch: 'Nasi + Ayam Geprek', dinner: 'Sup Sayuran & Perkedel' }
+      ];
+
+      const tableBody = document.getElementById('mealTableBody');
+      tableBody.innerHTML = '';
+
+      days.forEach((day, index) => {
+        const meal = sampleMeals[index];
+        const row = `
+          <tr>
+            <td><strong>${day}</strong></td>
+            <td>${meal.morning}</td>
+            <td>${meal.lunch}</td>
+            <td>${meal.dinner}</td>
+          </tr>
+        `;
+        tableBody.innerHTML += row;
+      });
+
+      // Scroll halus ke bagian hasil
+      document.getElementById('resultsCard').scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
